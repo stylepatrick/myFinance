@@ -1,0 +1,38 @@
+version: '3.2'
+services:
+
+    dbmoneyoverview:
+       image: postgres
+       restart: always
+       volumes:
+         - db-money-overview:/var/lib/postgresql/data
+       ports:
+         - 5432:5432
+       environment:
+         POSTGRES_USER: myFinance
+         POSTGRES_PASSWORD: password
+       logging:
+         driver: "json-file"
+         options:
+           max-size: "10m"
+           max-file: "10"
+
+    #admin: password: password
+    rpi-keycloak:
+        restart: always
+        privileged: true
+        volumes:
+          - db-keycloak:/data
+        ports:
+            - '8180:8080'
+            - '9990:9990'
+        image: ruifigueiredo/rpi-keycloak
+        logging:
+          driver: "json-file"
+          options:
+            max-size: "10m"
+            max-file: "10"
+
+volumes:
+  db-money-overview:
+  db-keycloak:
