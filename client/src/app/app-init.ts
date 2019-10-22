@@ -12,7 +12,7 @@ export function initializer(keycloak: KeycloakService): () => Promise<any> {
             onLoad: 'login-required',
             checkLoginIframe: false
           },
-          bearerExcludedUrls: []
+          bearerExcludedUrls: ['/*']
         });
         resolve();
       } catch (error) {

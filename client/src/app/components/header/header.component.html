@@ -9,9 +9,9 @@
 
 <div style="padding-bottom: 15px" class="p-grid">
   <div class="p-col">
-    <p>Hello %USERNAME%</p>
+    <p>Hello {{username}}</p>
   </div>
   <div align="right" class="p-col">
-    <button pButton type="button" label="Logout" ></button>
+    <button pButton type="button" (click)="onLogout()" label="Logout" ></button>
   </div>
 </div>

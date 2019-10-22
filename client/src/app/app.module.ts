@@ -48,13 +48,13 @@ import { HeaderComponent } from './components/header/header.component';
     KeyFilterModule
   ],
   providers: [DataService,
-    /*AppAuthGuard,
+    AppAuthGuard,
     {
       provide: APP_INITIALIZER,
       useFactory: initializer,
       multi: true,
       deps: [KeycloakService]
-    }*/],
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
