@@ -5,8 +5,8 @@ var dbconnection = require ('./dbconnection.js');
 
 var auth = require('basic-auth');
 
-var username = process.env.ENV_API_USER;
-var password = process.env.ENV_API_PASS;
+var username = 'patrick'; //process.env.ENV_API_USER;
+var password = 'patrick'; //process.env.ENV_API_PASS;
 
 app.listen(3000);
 
