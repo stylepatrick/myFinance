@@ -25,6 +25,7 @@
     "font-awesome": "^4.7.0",
     "keycloak-angular": "^7.0.1",
     "keycloak-js": "^4.8.1",
+    "primeflex": "^1.0.0",
     "primeicons": "^2.0.0",
     "primeng": "^8.0.4",
     "rxjs": "~6.5.3",

@@ -1,0 +1,27 @@
+<p-accordion>
+  <p-accordionTab header="New bill" [selected]="false">
+
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon">€</span>
+          <input type="text" pInputText [(ngModel)]="amount" placeholder="amount">
+        </div>
+      </div>
+
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="pi pi-pencil"></i></span>
+          <input type="text" pInputText [(ngModel)]="note" placeholder="note">
+        </div>
+      </div>
+
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+          <p-calendar [(ngModel)]="date" [showIcon]="true"></p-calendar>
+        </div>
+      </div>
+    </div>
+
+  </p-accordionTab>
+</p-accordion>
