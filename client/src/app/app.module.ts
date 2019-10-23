@@ -24,6 +24,8 @@ import {FormsModule} from '@angular/forms';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import { HeaderComponent } from './components/header/header.component';
 import {MenubarModule} from 'primeng/menubar';
+import { ChartBillsComponent } from './components/chart-bills/chart-bills.component';
+import {ChartModule} from 'primeng/chart';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import {MenubarModule} from 'primeng/menubar';
     MenuComponent,
     BillsComponent,
     NewBillsComponent,
-    HeaderComponent
+    HeaderComponent,
+    ChartBillsComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import {MenubarModule} from 'primeng/menubar';
     FormsModule,
     BrowserAnimationsModule,
     KeyFilterModule,
-    MenubarModule
+    MenubarModule,
+    ChartModule
   ],
   providers: [DataService,
     /*AppAuthGuard,
