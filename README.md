@@ -17,10 +17,10 @@ PostgresSQL is used for Store Data and Keycloak for User Authentification.
 JavaScript backend is secured by BasicAuth.
 
 
-# Client
+## Client
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.6.
 
-# Backend
+## Backend
 
 Backend is made with JavaScript and NodeJS.
