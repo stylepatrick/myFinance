@@ -4,24 +4,24 @@
     <tr>
       <div class="ui-inputgroup">
         <span class="ui-inputgroup-addon"><i class="pi pi-money-bill"></i></span>
-        <input type="text" pInputText [(ngModel)]="amount" placeholder="amount">
+        <input type="text" pInputText pKeyFilter="money" [(ngModel)]="amount" placeholder="amount">
       </div>
     </tr>
     <tr>
       <div class="ui-inputgroup">
         <span class="ui-inputgroup-addon"><i class="pi pi-pencil"></i></span>
-        <input type="text" pInputText [(ngModel)]="note" placeholder="note">
+        <input type="text" pInputText maxlength="255" [(ngModel)]="note" placeholder="note">
       </div>
     </tr>
-    <tr>
+    <!--<tr>
       <div class="ui-inputgroup">
         <p>
         <p-calendar [(ngModel)]="date" [showIcon]="true" [touchUI]="true"></p-calendar>
         </p>
       </div>
-    </tr>
+    </tr>-->
     <tr>
-      <td align="right"><p-button icon="pi pi-save" (onClick)="onNext($event)" label="Save"></p-button></td>
+      <td align="right"><p-button [disabled]="!amount" icon="pi pi-save" (onClick)="onSaveButton($event)" label="Save"></p-button></td>
     </tr>
   </table>
 </div>

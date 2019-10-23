@@ -1,3 +1,8 @@
+<div style="font: font-family: Arial; margin-top: -20px; font-size: 20px" class="p-grid">
+  <div align="left" class="p-col-12">
+    <p style="color: black; font-size: 15px">Total: <b>{{sum}}€</b></p>
+  </div>
+</div>
 <p-table [columns]="cols" [value]="billentries">
   <ng-template pTemplate="header" let-columns>
     <tr>
@@ -7,7 +12,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
-    <tr>
+    <tr align="center">
       <td *ngFor="let col of columns">
         {{rowData[col.field]}}
       </td>

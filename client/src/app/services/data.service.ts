@@ -21,4 +21,15 @@ export class DataService {
     const url = 'api/entries/' + this.auth.getUsername() + '';
     return this.http.get<BillEntries[]>(url, {headers: this.headers});
   }
+
+  postNewBill(newBill: BillEntries): Observable<BillEntries[]> {
+    if (newBill.note) {
+      const url = 'api/new/' + this.auth.getUsername() + '/' + newBill.value + '/' + newBill.note;
+      return this.http.get<BillEntries[]>(url, {headers: this.headers});
+    } else {
+      const url = 'api/new/' + this.auth.getUsername() + '/' + newBill.value;
+      return this.http.get<BillEntries[]>(url, {headers: this.headers});
+    }
+
+  }
 }

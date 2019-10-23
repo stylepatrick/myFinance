@@ -12,22 +12,26 @@ export class BillsComponent implements OnInit {
 
   billentries: BillEntries[];
   cols: any[];
-  user: string;
+  sum: number;
 
   constructor(private route: ActivatedRoute,
               private dataService: DataService) { }
 
   ngOnInit() {
-    this.user = 'patrick';
+    this.sum = 0;
     this.route.params.subscribe(params => {
       this.dataService.getBillEntries().subscribe(billentries => {
         this.billentries = billentries;
+        for (let i = 0; i <= billentries.length - 1; i++) {
+          this.sum = this.sum + parseFloat(String(billentries[i].value));
+        }
       });
     });
 
     this.cols = [
-      { field: 'value', header: 'Value' },
+      { field: 'value', header: 'Amount in €' },
       { field: 'crdt', header: 'Created' },
+      { field: 'note', header: 'Note' },
     ];
   }
 }
