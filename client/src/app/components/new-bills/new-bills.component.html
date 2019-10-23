@@ -1,27 +1,26 @@
-<p-accordion>
-  <p-accordionTab header="New bill" [selected]="false">
-
-    <div class="ui-g ui-fluid">
-      <div class="ui-g-12 ui-md-4">
-        <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon">€</span>
-          <input type="text" pInputText [(ngModel)]="amount" placeholder="amount">
-        </div>
+<div align="center" style="font-family: Arial; color: white;">
+  <table>
+    <tr>
+      <div class="ui-inputgroup">
+        <span class="ui-inputgroup-addon"><i class="pi pi-money-bill"></i></span>
+        <input type="text" pInputText [(ngModel)]="amount" placeholder="amount">
       </div>
-
-      <div class="ui-g-12 ui-md-4">
-        <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-pencil"></i></span>
-          <input type="text" pInputText [(ngModel)]="note" placeholder="note">
-        </div>
+    </tr>
+    <tr>
+      <div class="ui-inputgroup">
+        <span class="ui-inputgroup-addon"><i class="pi pi-pencil"></i></span>
+        <input type="text" pInputText [(ngModel)]="note" placeholder="note">
       </div>
-
-      <div class="ui-g-12 ui-md-4">
-        <div class="ui-inputgroup">
-          <p-calendar [(ngModel)]="date" [showIcon]="true"></p-calendar>
-        </div>
+    </tr>
+    <tr>
+      <div class="ui-inputgroup">
+        <p>
+        <p-calendar [(ngModel)]="date" [showIcon]="true"></p-calendar>
+        </p>
       </div>
-    </div>
-
-  </p-accordionTab>
-</p-accordion>
+    </tr>
+    <tr>
+      <td align="center"><p-button icon="pi pi-save" (onClick)="onNext($event)" label="Save"></p-button></td>
+    </tr>
+  </table>
+</div>

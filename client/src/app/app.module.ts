@@ -23,6 +23,7 @@ import { NewBillsComponent } from './components/new-bills/new-bills.component';
 import {FormsModule} from '@angular/forms';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import { HeaderComponent } from './components/header/header.component';
+import {MenubarModule} from 'primeng/menubar';
 
 @NgModule({
   declarations: [
@@ -45,16 +46,17 @@ import { HeaderComponent } from './components/header/header.component';
     CalendarModule,
     FormsModule,
     BrowserAnimationsModule,
-    KeyFilterModule
+    KeyFilterModule,
+    MenubarModule
   ],
   providers: [DataService,
-    AppAuthGuard,
+    /*AppAuthGuard,
     {
       provide: APP_INITIALIZER,
       useFactory: initializer,
       multi: true,
       deps: [KeycloakService]
-    }],
+    }*/],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
