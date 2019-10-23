@@ -24,7 +24,7 @@ import {FormsModule} from '@angular/forms';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import { HeaderComponent } from './components/header/header.component';
 import {MenubarModule} from 'primeng/menubar';
-import { ChartBillsComponent } from './components/chart-bills/chart-bills.component';
+import { ChartBillsComponent } from './components/chart-salary/chart-bills.component';
 import {ChartModule} from 'primeng/chart';
 
 @NgModule({

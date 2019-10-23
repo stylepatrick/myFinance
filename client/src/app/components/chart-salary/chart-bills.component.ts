@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class ChartBillsComponent implements OnInit {
 
   data: any;
+  dateFrom: any;
+  dateTo: any;
 
   constructor() { }
 
@@ -29,5 +31,9 @@ export class ChartBillsComponent implements OnInit {
         }
       ]
     };
+  }
+
+  onSearch($event: any) {
+    
   }
 }

@@ -44,8 +44,8 @@ export class MenuComponent implements OnInit {
         label: 'Charts',
         icon: 'pi pi-chart-line',
         items: [
-          {label: 'Bills', icon: 'pi pi-shopping-cart', routerLink: '/billCharts'},
-          {label: 'Salary', icon: 'pi pi-money-bill'}
+          {label: 'Salary', icon: 'pi pi-money-bill', routerLink: '/chartSalary'},
+          {label: 'Bills', icon: 'pi pi-shopping-cart'}
         ]
       }
     ];
