@@ -24,8 +24,10 @@ import {FormsModule} from '@angular/forms';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import { HeaderComponent } from './components/header/header.component';
 import {MenubarModule} from 'primeng/menubar';
-import { ChartBillsComponent } from './components/chart-salary/chart-bills.component';
+import { ChartSalaryComponent } from './components/chart-salary/chart-salary.component';
 import {ChartModule} from 'primeng/chart';
+import { HistoryBillComponent } from './components/history-bill/history-bill.component';
+import { ChartBillsComponent } from './components/chart-bills/chart-bills.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import {ChartModule} from 'primeng/chart';
     BillsComponent,
     NewBillsComponent,
     HeaderComponent,
+    ChartSalaryComponent,
+    HistoryBillComponent,
     ChartBillsComponent
   ],
   imports: [

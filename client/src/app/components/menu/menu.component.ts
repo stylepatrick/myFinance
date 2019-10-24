@@ -29,15 +29,16 @@ export class MenuComponent implements OnInit {
           },
           {
             label: 'History',
-            icon: 'pi pi-search'}
+            icon: 'pi pi-search',
+            routerLink: '/historybills'
+          }
         ]
       },
       {
         label: 'Salary',
         icon: 'pi pi-money-bill',
         items: [
-          {label: 'New', icon: 'pi pi-fw pi-plus'},
-          {label: 'History', icon: 'pi pi-search'}
+          {label: 'New', icon: 'pi pi-fw pi-plus'}
         ]
       },
       {
@@ -45,7 +46,7 @@ export class MenuComponent implements OnInit {
         icon: 'pi pi-chart-line',
         items: [
           {label: 'Salary', icon: 'pi pi-money-bill', routerLink: '/chartSalary'},
-          {label: 'Bills', icon: 'pi pi-shopping-cart'}
+          {label: 'Bills', icon: 'pi pi-shopping-cart', routerLink: '/chartBills'}
         ]
       }
     ];

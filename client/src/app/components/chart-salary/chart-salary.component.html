@@ -1,11 +1,11 @@
 <div style="font: font-family: Arial; margin-top: -20px; font-size: 20px" class="p-grid">
   <div align="center" class="p-col-6">
     <span style="font-size: 15px;"><i class="pi pi-calendar"></i>From </span>
-    <p-calendar (onSelect)="onSearch($event)" [yearNavigator]="true" view="month" yearRange="2018:2150" dateFormat="mm/yy" [(ngModel)]="dateFrom" [touchUI]="true"></p-calendar>
+    <p-calendar (onSelect)="onSearch($event)" view="month" [minDate]="fromfirstMonth" [maxDate]="fromlastMonth" dateFormat="mm/yy" [(ngModel)]="dateFrom" [touchUI]="true"></p-calendar>
   </div>
   <div align="center" class="p-col-6">
     <span style="font-size: 15px;"><i class="pi pi-calendar"></i>To </span>
-    <p-calendar (onSelect)="onSearch($event)" [yearNavigator]="true" view="month" yearRange="2018:2150" dateFormat="mm/yy" [(ngModel)]="dateTo" [touchUI]="true"></p-calendar>
+    <p-calendar (onSelect)="onSearch($event)" view="month" [minDate]="tofirstMonth" [maxDate]="tolastMonth" dateFormat="mm/yy" [(ngModel)]="dateTo" [touchUI]="true"></p-calendar>
   </div>
 </div>
 <hr />

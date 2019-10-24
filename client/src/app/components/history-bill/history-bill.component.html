@@ -1,0 +1,29 @@
+<div style="font: font-family: Arial; margin-top: -20px; font-size: 20px" class="p-grid">
+  <div align="center" class="p-col-12">
+    <span style="font-size: 15px;"><i class="pi pi-calendar"></i>Month: </span>
+    <p-calendar (onSelect)="onSearch($event)" view="month" dateFormat="mm/yy" [(ngModel)]="dateFrom" [touchUI]="true"></p-calendar>
+  </div>
+</div>
+<hr />
+
+<div style="font: font-family: Arial; margin-top: -20px; font-size: 20px" class="p-grid">
+  <div align="left" class="p-col-12">
+    <p style="color: black; font-size: 15px">Total: <b>{{sum}}€</b></p>
+  </div>
+</div>
+<p-table [columns]="cols" [value]="billentries">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr align="center">
+      <td *ngFor="let col of columns">
+        {{rowData[col.field]}}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
