@@ -28,6 +28,7 @@ import { ChartSalaryComponent } from './components/chart-salary/chart-salary.com
 import {ChartModule} from 'primeng/chart';
 import { HistoryBillComponent } from './components/history-bill/history-bill.component';
 import { ChartBillsComponent } from './components/chart-bills/chart-bills.component';
+import { NewSalaryComponent } from './components/new-salary/new-salary.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ChartBillsComponent } from './components/chart-bills/chart-bills.compon
     HeaderComponent,
     ChartSalaryComponent,
     HistoryBillComponent,
-    ChartBillsComponent
+    ChartBillsComponent,
+    NewSalaryComponent
   ],
   imports: [
     BrowserModule,
