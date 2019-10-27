@@ -1,6 +1,5 @@
-export interface BillEntries {
+export interface SalaryEntries {
   id?: number;
   value: number;
-  note?: string;
   crdt?: string;
 }

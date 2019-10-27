@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, DoCheck, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {DataService} from '../../services/data.service';
+import {ChartBills} from '../../interfaces/chart-bills';
 
 @Component({
   selector: 'app-chart-bills',
@@ -14,39 +17,36 @@ export class ChartBillsComponent implements OnInit {
   fromlastMonth: any;
   tofirstMonth: any;
   tolastMonth: any;
+  chart: ChartBills[];
+  cols: any;
+  month: any;
+  year: any;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute,
+              private dataService: DataService) {
+  }
 
   ngOnInit() {
-
-    this.fromfirstMonth = new Date(new Date().getFullYear(), 0, 1);
-    this.fromlastMonth = new Date();
-    this.tofirstMonth = new Date();
-    this.tolastMonth = new Date(new Date().getFullYear(), 11, 31);
-
-    this.dateFrom = this.fromfirstMonth;
-    this.dateTo = this.tolastMonth;
-
-    this.data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'Patrick',
-          data: [1800, 1900, 1750, 2000, 1980, 1600, 1750],
-          fill: false,
-          borderColor: 'green'
-        },
-        {
-          label: 'Gaby',
-          data: [2000, 1900, 1800, null, 1850, 1700, 1800],
-          fill: false,
-          borderColor: '#565656'
-        }
-      ]
-    };
+    this.dateFrom = new Date();
+    this.onSearch();
+    this.cols = [
+      { field: 'month_name', header: 'Month' },
+      { field: 'year', header: 'Year' },
+      { field: 'amount', header: 'Amount in €' },
+      { field: 'crby', header: 'User' },
+    ];
   }
 
-  onSearch($event: any) {
-
+  onSearch() {
+    this.chart = null;
+    //+1 needed because Janaury = 0 in frontend and in backend we have January = 1
+    this.month = this.dateFrom.getMonth() + 1;
+    this.year = this.dateFrom.getFullYear();
+    this.route.params.subscribe(params => {
+      this.dataService.getBillChart(this.month, this.year).subscribe(chart => {
+        this.chart = chart;
+      });
+    });
   }
 }
+

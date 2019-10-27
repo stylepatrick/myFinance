@@ -3,9 +3,9 @@ var Pool = require('pg-pool');
 function dbconnection(){
     //console.log('Connected to Database!')
     var pool = new Pool({
-        user: 'money-overview',
+        user: 'myfinance',
         host: '192.168.0.254',
-        database: 'money-overview',
+        database: 'myfinance',
         password: 'money1234#',
         port: 5432
     });
