@@ -3,10 +3,10 @@ import { KeycloakConfig } from 'keycloak-angular';
 // Add here your keycloak setup infos
 const keycloakConfig: KeycloakConfig = {
   url: 'http://192.168.0.254:8180/auth/',
-  realm: 'MyFinance',
+  realm: 'myFinance',
   clientId: 'myfinance',
   "credentials": {
-    "secret": "6aa32fc1-7c14-43da-b9c3-3b2f66b7bed9"
+    "secret": "16155a5d-a38d-4dec-8437-47cd31d9f301"
   }
 };
 

@@ -29,8 +29,6 @@ import {ChartModule} from 'primeng/chart';
 import { HistoryBillComponent } from './components/history-bill/history-bill.component';
 import { ChartBillsComponent } from './components/chart-bills/chart-bills.component';
 import { NewSalaryComponent } from './components/new-salary/new-salary.component';
-import {ToastModule} from 'primeng/toast';
-import {MessageService} from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -59,11 +57,9 @@ import {MessageService} from 'primeng/api';
     BrowserAnimationsModule,
     KeyFilterModule,
     MenubarModule,
-    ChartModule,
-    ToastModule
+    ChartModule
   ],
   providers: [DataService,
-    MessageService,
     AppAuthGuard,
     {
       provide: APP_INITIALIZER,

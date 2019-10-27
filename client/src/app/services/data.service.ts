@@ -3,8 +3,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {BillEntries} from '../interfaces/bill-entries';
 import {KeycloakService} from 'keycloak-angular';
-import {SalaryEntries} from '../interfaces/salary-entries';
-import {ChartBills} from '../interfaces/chart-bills';
 
 @Injectable({
   providedIn: 'root'
@@ -30,23 +28,14 @@ export class DataService {
   }
 
   //ToDo find better solution for post with note and post without note
-  postNewBill(newBill: BillEntries): Observable<any[]> {
+  postNewBill(newBill: BillEntries): Observable<BillEntries[]> {
     if (newBill.note) {
-      const url = 'api/new/bill/' + this.auth.getUsername() + '/' + newBill.value + '/' + newBill.note;
-      return this.http.get<any[]>(url, {headers: this.headers});
+      const url = 'api/new/' + this.auth.getUsername() + '/' + newBill.value + '/' + newBill.note;
+      return this.http.get<BillEntries[]>(url, {headers: this.headers});
     } else {
-      const url = 'api/new/bill/' + this.auth.getUsername() + '/' + newBill.value;
-      return this.http.get<any[]>(url, {headers: this.headers});
+      const url = 'api/new/' + this.auth.getUsername() + '/' + newBill.value;
+      return this.http.get<BillEntries[]>(url, {headers: this.headers});
     }
-  }
 
-  postNewSalary(newSalary: any):  Observable<any[]> {
-      const url = 'api/new/salary/' + this.auth.getUsername() + '/' + newSalary.value;
-      return this.http.get<any[]>(url, {headers: this.headers});
-  }
-
-  getBillChart(month: any, year: any): Observable<ChartBills[]> {
-    const url = 'api/chartBills/' + this.auth.getUsername() + '/' + month + '/' + year;
-    return this.http.get<ChartBills[]>(url, {headers: this.headers});
   }
 }
