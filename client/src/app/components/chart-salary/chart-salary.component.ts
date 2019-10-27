@@ -15,6 +15,13 @@ export class ChartSalaryComponent implements OnInit {
   tofirstMonth: any;
   tolastMonth: any;
 
+  monthFrom: any;
+  monthTo: any;
+  yearFrom: any;
+  yearTo: any;
+
+  dataset: any;
+
   constructor() { }
 
   ngOnInit() {
@@ -28,25 +35,46 @@ export class ChartSalaryComponent implements OnInit {
     this.dateTo = this.tolastMonth;
 
     this.data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'Patrick',
-          data: [1800, 1900, 1750, 2000, 1980, 1600, 1750],
-          fill: false,
-          borderColor: 'green'
-        },
-        {
-          label: 'Gaby',
-          data: [2000, 1900, 1800, null, 1850, 1700, 1800],
-          fill: false,
-          borderColor: '#565656'
-        }
-      ]
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      datasets: this.getDataset(this.dateFrom, this.dateTo)
     };
   }
 
   onSearch($event: any) {
-    
+    this.getDataset(this.dateFrom, this.dateTo);
+  }
+
+  getDataset(dateFrom: any, dateTo: any) {
+
+    this.monthFrom = dateFrom.getMonth();
+    this.yearFrom = dateFrom.getFullYear();
+
+    this.monthTo = dateTo.getMonth();
+    this.yearTo = dateTo.getFullYear();
+
+
+    console.log(this.monthFrom);
+    console.log(this.yearFrom);
+
+    console.log(this.monthTo);
+    console.log(this.yearTo);
+
+
+    this.dataset =
+    [
+      {
+        label: 'Patrick',
+        data: [1800, 1900, 1750, 2000, 1980, 1600, 1750],
+        fill: false,
+        borderColor: 'green'
+      },
+      {
+        label: 'Gaby',
+        data: [2000, 1900, 1800, null, 1850, 1700, 1800],
+        fill: false,
+        borderColor: '#565656'
+      }
+    ];
+    return this.dataset;
   }
 }

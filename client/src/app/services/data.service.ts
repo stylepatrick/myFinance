@@ -17,11 +17,17 @@ export class DataService {
   constructor(private http: HttpClient,
               private auth: KeycloakService) { }
 
-  public getBillEntries(): Observable<BillEntries[]> {
-    const url = 'api/entries/' + this.auth.getUsername() + '';
+  public getBillEntriesCurrentMonth(): Observable<BillEntries[]> {
+    const url = 'api/currentBills/' + this.auth.getUsername() + '';
     return this.http.get<BillEntries[]>(url, {headers: this.headers});
   }
 
+  public getBillEntriesHistory(month: any, year: any): Observable<BillEntries[]> {
+    const url = 'api/historyBills/' + this.auth.getUsername() + '/' + month + '/' + year + '';
+    return this.http.get<BillEntries[]>(url, {headers: this.headers});
+  }
+
+  //ToDo find better solution for post with note and post without note
   postNewBill(newBill: BillEntries): Observable<BillEntries[]> {
     if (newBill.note) {
       const url = 'api/new/' + this.auth.getUsername() + '/' + newBill.value + '/' + newBill.note;

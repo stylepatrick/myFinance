@@ -15,7 +15,7 @@ app.get('/', function (req, res) {
   res.send('MyFinance API is Running! :)');
 });
 
-
+//ToDo add keycloak to backend. Basic Auth is not secure.
 app.use('/api',function(req, res, callback) {
   var user = auth(req);
 
@@ -29,7 +29,7 @@ app.use('/api',function(req, res, callback) {
 });
 
 
-app.get('/api/entries/:user', function (req, result, callback) {
+app.get('/api/currentBills/:user', function (req, result, callback) {
 
     var user = req.params.user;
     
@@ -42,7 +42,7 @@ app.get('/api/entries/:user', function (req, result, callback) {
   
     pool.connect().then(client => {
       client.query(
-        "select value, to_char(crdt, 'DD.MM.YYY  HH12:MI:SS') as crdt, note from MON_ENTRIES where crby = '" + user + "' order by crdt;"
+        "select value, to_char(crdt, 'DD.MM.YYY  HH12:MI:SS') as crdt, note from MON_ENTRIES where crby = '" + user + "' and extract (month FROM crdt) = extract (month FROM CURRENT_DATE) order by crdt desc;"
       ).then(res => {
         if(res && res.rowCount != 0){
           result.send(res.rows);
@@ -62,6 +62,44 @@ app.get('/api/entries/:user', function (req, result, callback) {
       })
 });
 
+app.get('/api/historyBills/:user/:month/:year', function (req, result, callback) {
+
+  var user = req.params.user;
+  var month = req.params.month;
+  var monthTo = parseInt(month) + 1;
+  var year = req.params.year;
+
+  
+  try{
+    var pool = dbconnection();
+  }catch(err){
+    console.log('Connect to database failed!')
+    callback(null);
+  }
+
+  pool.connect().then(client => {
+    client.query(
+      "select value, to_char(crdt, 'DD.MM.YYY  HH12:MI:SS') as crdt, note from MON_ENTRIES where crby = '" + user + "' and crdt between to_date('" + month + "." + year + "', 'MM.YYYY') and to_date('" + monthTo + "." + year + "', 'MM.YYYY');"
+    ).then(res => {
+      if(res && res.rowCount != 0){
+        result.send(res.rows);
+      } else {
+        var noUser = {
+          "userNotFound" : true,
+         };
+        result.send(noUser);
+        
+      }			
+    })
+    .catch(e => {
+      console.error('query error', e.message, e.stack)
+      pool.end();
+      return null;
+    })
+    })
+});
+
+//ToDo find better solution for post with note and post without note
 app.get('/api/new/:user/:value/:note', function(req, result, callback){
 
   try{
@@ -95,6 +133,7 @@ app.get('/api/new/:user/:value/:note', function(req, result, callback){
   }
 });
 
+//ToDo find better solution for post with note and post without note
 app.get('/api/new/:user/:value', function(req, result, callback){
 
   try{

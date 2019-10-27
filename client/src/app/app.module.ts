@@ -60,13 +60,13 @@ import { NewSalaryComponent } from './components/new-salary/new-salary.component
     ChartModule
   ],
   providers: [DataService,
-    /*AppAuthGuard,
+    AppAuthGuard,
     {
       provide: APP_INITIALIZER,
       useFactory: initializer,
       multi: true,
       deps: [KeycloakService]
-    }*/],
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -14,13 +14,14 @@ export class BillsComponent implements OnInit {
   cols: any[];
   sum: number;
 
+
   constructor(private route: ActivatedRoute,
               private dataService: DataService) { }
 
   ngOnInit() {
     this.sum = 0;
     this.route.params.subscribe(params => {
-      this.dataService.getBillEntries().subscribe(billentries => {
+      this.dataService.getBillEntriesCurrentMonth().subscribe(billentries => {
         this.billentries = billentries;
         for (let i = 0; i <= billentries.length - 1; i++) {
           this.sum = this.sum + parseFloat(String(billentries[i].value));
