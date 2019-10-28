@@ -12,6 +12,7 @@ import {MessageService} from 'primeng/api';
 export class NewSalaryComponent implements OnInit {
   amount: any;
   newSalary: SalaryEntries;
+  lastMonth: any;
 
   constructor(private route: ActivatedRoute,
               private dataService: DataService,
@@ -26,16 +27,17 @@ export class NewSalaryComponent implements OnInit {
     };
 
     this.route.params.subscribe(params => {
-      this.dataService.postNewSalary(this.newSalary).subscribe(result => {
+      this.dataService.postNewSalary(this.newSalary, this.lastMonth).subscribe(result => {
         if (result[0].salaryExistForThisMonth === true) {
-          this.messageService.add({severity:'warn', summary: 'Salary already exist', detail:'You Salary already exist for this month'});
+          this.messageService.add({severity:'warn', summary: 'Salary already exist', detail:'You Salary already exist for selected month'});
         }
         if (result[0].rowCreated === true) {
-          this.messageService.add({severity:'success', summary: 'Salary created', detail:'Salary add for the current month'});
+          this.messageService.add({severity:'success', summary: 'Salary created', detail:'Salary add for the selected month'});
         }
         if (result[0].wrongInput === true) {
           this.messageService.add({severity:'error', summary: 'Wrong Input', detail:'Your Sarary is not saved'});
         }
+        this.lastMonth = null;
       });
     });
 

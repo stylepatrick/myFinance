@@ -40,9 +40,15 @@ export class DataService {
     }
   }
 
-  postNewSalary(newSalary: any):  Observable<any[]> {
+  //ToDo find better solution for post with lastMonth and post without last month
+  postNewSalary(newSalary: any, lastMonth: any):  Observable<any[]> {
+    if (lastMonth) {
+      const url = 'api/new/salary/' + this.auth.getUsername() + '/' + newSalary.value + '/lastMonth';
+      return this.http.get<any[]>(url, {headers: this.headers});
+    } else {
       const url = 'api/new/salary/' + this.auth.getUsername() + '/' + newSalary.value;
       return this.http.get<any[]>(url, {headers: this.headers});
+    }
   }
 
   getBillChart(month: any, year: any): Observable<ChartBills[]> {

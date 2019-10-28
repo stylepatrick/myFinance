@@ -33,6 +33,7 @@ import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import { RandomcolorModule } from 'angular-randomcolor';
 import { DetailSalaryComponent } from './components/detail-salary/detail-salary.component';
+import {CheckboxModule} from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { DetailSalaryComponent } from './components/detail-salary/detail-salary.
     MenubarModule,
     ChartModule,
     ToastModule,
-    RandomcolorModule
+    RandomcolorModule,
+    CheckboxModule
   ],
   providers: [DataService,
     MessageService,

@@ -218,6 +218,54 @@ app.get('/api/new/salary/:user/:value', function(req, result, callback){
   }
 });
 
+app.get('/api/new/salary/:user/:value/lastMonth', function(req, result, callback){
+
+  try{
+    var pool = dbconnection();
+  }catch(err){
+    console.log('Connect to database failed!')
+    callback(null);
+  }
+  if(req.params.value && req.params.user)
+  {
+    pool.connect().then(client => {
+      client.query(
+        "select * from MFI_SALARY where crby = '" +  req.params.user + "' and extract (month FROM crdt) = extract (month FROM CURRENT_DATE - interval '1 month');"
+      ).then(res => {
+        if(res && res.rowCount == 0){
+          client.query(
+            "INSERT INTO MFI_SALARY (value, crby, crdt) VALUES (" + req.params.value + ", '" + req.params.user + "', date_trunc('month', current_date) - interval '1 month');"
+          ).then(res => {
+              const rowCreated = [{
+              "rowCreated" : true,
+             }];
+            result.send(rowCreated);			
+          })
+          .catch(e => {
+            console.error('query error', e.message, e.stack)
+            pool.end();
+          })
+
+        } else {
+          var salaryExistForThisMonth = [{
+            "salaryExistForThisMonth" : true,
+           }];
+          result.send(salaryExistForThisMonth);
+        }			
+      })
+      .catch(e => {
+        console.error('query error', e.message, e.stack)
+        pool.end();
+        return null;
+      })
+      })
+  } else{
+    const wrongInput = [{
+      "wrongInput" : true,
+     }];
+    result.send(wrongInput);
+  }
+});
 app.get('/api/chartBills/:user/:month/:year', function (req, result, callback) {
 
   var user = req.params.user;
