@@ -8,6 +8,7 @@ import {ChartSalaryComponent} from './components/chart-salary/chart-salary.compo
 import {HistoryBillComponent} from './components/history-bill/history-bill.component';
 import {ChartBillsComponent} from './components/chart-bills/chart-bills.component';
 import {NewSalaryComponent} from './components/new-salary/new-salary.component';
+import {DetailSalaryComponent} from './components/detail-salary/detail-salary.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'chartSalary', component: ChartSalaryComponent, /*canActivate: [AppAuthGuard], data: { roles: ['MyFinance'] }*/ },
   { path: 'historybills', component: HistoryBillComponent, /*canActivate: [AppAuthGuard], data: { roles: ['MyFinance'] }*/ },
   { path: 'chartBills', component: ChartBillsComponent, /*canActivate: [AppAuthGuard], data: { roles: ['MyFinance'] }*/ },
-  { path: 'newSalary', component: NewSalaryComponent, /*canActivate: [AppAuthGuard], data: { roles: ['MyFinance'] }*/ }
+  { path: 'newSalary', component: NewSalaryComponent, /*canActivate: [AppAuthGuard], data: { roles: ['MyFinance'] }*/ },
+  { path: 'detailSalary', component: DetailSalaryComponent, /*canActivate: [AppAuthGuard], data: { roles: ['MyFinance'] }*/ }
 ];
 
 @NgModule({

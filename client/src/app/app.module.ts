@@ -32,6 +32,7 @@ import { NewSalaryComponent } from './components/new-salary/new-salary.component
 import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import { RandomcolorModule } from 'angular-randomcolor';
+import { DetailSalaryComponent } from './components/detail-salary/detail-salary.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { RandomcolorModule } from 'angular-randomcolor';
     ChartSalaryComponent,
     HistoryBillComponent,
     ChartBillsComponent,
-    NewSalaryComponent
+    NewSalaryComponent,
+    DetailSalaryComponent
   ],
   imports: [
     BrowserModule,

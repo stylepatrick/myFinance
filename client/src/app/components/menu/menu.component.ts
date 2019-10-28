@@ -38,7 +38,8 @@ export class MenuComponent implements OnInit {
         label: 'Salary',
         icon: 'pi pi-money-bill',
         items: [
-          {label: 'New', icon: 'pi pi-fw pi-plus', routerLink: '/newSalary'}
+          {label: 'New', icon: 'pi pi-fw pi-plus', routerLink: '/newSalary'},
+          {label: 'Details', icon: 'pi pi-list', routerLink: '/detailSalary'}
         ]
       },
       {

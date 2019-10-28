@@ -59,4 +59,9 @@ export class DataService {
     const url = 'api/slaveUser/' + this.auth.getUsername();
     return this.http.get<any[]>(url, {headers: this.headers});
   }
+
+  getDetailSalary(): Observable<any[]> {
+    const url = 'api/detailSalary/' + this.auth.getUsername();
+    return this.http.get<any[]>(url, {headers: this.headers});
+  }
 }

@@ -327,3 +327,36 @@ app.get('/api/slaveUser/:user', function (req, result, callback) {
     })
     })
 });
+
+app.get('/api/detailSalary/:user', function (req, result, callback) {
+
+  var user = req.params.user;
+  
+  try{
+    var pool = dbconnection();
+  }catch(err){
+    console.log('Connect to database failed!')
+    callback(null);
+  }
+
+  pool.connect().then(client => {
+    client.query(
+      "select sum, max, min, avg, year, crby from V_mfi_salary_anual where crby in (select slave_user from mfi_groups where master_user = '" + user + "') union select sum, max, min, avg, year, crby from V_mfi_salary_anual where crby = '" + user + "';"
+    ).then(res => {
+      if(res && res.rowCount != 0){
+        result.send(res.rows);
+      } else {
+        var noUser = {
+          "userNotFound" : true,
+         };
+        result.send(noUser);
+        
+      }			
+    })
+    .catch(e => {
+      console.error('query error', e.message, e.stack)
+      pool.end();
+      return null;
+    })
+    })
+});
