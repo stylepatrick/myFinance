@@ -10,13 +10,9 @@ import {ChartBills} from '../../interfaces/chart-bills';
 })
 export class ChartBillsComponent implements OnInit {
 
-  data: any;
   dateFrom: any;
-  dateTo: any;
   fromfirstMonth: any;
   fromlastMonth: any;
-  tofirstMonth: any;
-  tolastMonth: any;
   chart: ChartBills[];
   cols: any;
   month: any;

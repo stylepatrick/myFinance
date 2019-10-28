@@ -4,6 +4,7 @@ var app = express();
 var dbconnection = require ('./dbconnection.js');
 
 var auth = require('basic-auth');
+var _ = require('lodash');
 
 var username = 'patrick'; //process.env.ENV_API_USER;
 var password = 'patrick'; //process.env.ENV_API_PASS;
@@ -232,7 +233,7 @@ app.get('/api/chartBills/:user/:month/:year', function (req, result, callback) {
 
   pool.connect().then(client => {
     client.query(
-      "select month_name, year, amount, crby from V_mfi_bills_grouped where crby in (select slave_user from mfi_groups where master_user = '" + user + "') and month_index = '" + month +"' and year = '" + year + "' union all select month_name, year, amount, crby from V_mfi_bills_grouped where crby = '" + user +"' and month_index = '" + month + "' and year = '" + year + "';"
+      "select month_name, year, amount, crby from V_mfi_bills_grouped where crby in (select slave_user from mfi_groups where master_user = '" + user + "') and month_index = '" + month +"' and year = '" + year + "' union select month_name, year, amount, crby from V_mfi_bills_grouped where crby = '" + user +"' and month_index = '" + month + "' and year = '" + year + "';"
     ).then(res => {
       if(res && res.rowCount != 0){
         result.send(res.rows);
@@ -240,6 +241,81 @@ app.get('/api/chartBills/:user/:month/:year', function (req, result, callback) {
         var noUser = {
           "userNotFound" : true,
          };
+        result.send(noUser);
+        
+      }			
+    })
+    .catch(e => {
+      console.error('query error', e.message, e.stack)
+      pool.end();
+      return null;
+    })
+    })
+});
+
+
+app.get('/api/chartSalary/:user', function (req, result, callback) {
+
+  var user = req.params.user;
+  
+  try{
+    var pool = dbconnection();
+  }catch(err){
+    console.log('Connect to database failed!')
+    callback(null);
+  }
+
+  pool.connect().then(client => {
+    client.query(
+      "select month_name, year, value, crby from V_mfi_salary_grouped where crby = '" + user + "' and year = extract (year FROM CURRENT_DATE) order by month_index;"
+    ).then(res => {
+      if(res && res.rowCount != 0){
+        values = [];
+        _.forEach(res.rows, function(row){
+          values.push(row.value)
+				})
+        result.send(values);
+      } else {
+        var noUser = [{
+          "userNotFound" : true,
+         }];
+        result.send(noUser);
+        
+      }			
+    })
+    .catch(e => {
+      console.error('query error', e.message, e.stack)
+      pool.end();
+      return null;
+    })
+    })
+});
+
+app.get('/api/slaveUser/:user', function (req, result, callback) {
+
+  var user = req.params.user;
+  
+  try{
+    var pool = dbconnection();
+  }catch(err){
+    console.log('Connect to database failed!')
+    callback(null);
+  }
+
+  pool.connect().then(client => {
+    client.query(
+      "select slave_user from mfi_groups where master_user = '" + user + "' union select master_user from mfi_groups where master_user = '" + user + "';"
+    ).then(res => {
+      if(res && res.rowCount != 0){
+        users = [];
+        _.forEach(res.rows, function(row){
+          users.push(row.slave_user)
+				})
+        result.send(users);
+      } else {
+        var noUser = [{
+          "userNotFound" : true,
+         }];
         result.send(noUser);
         
       }			

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {DataService} from '../../services/data.service';
+import { RandomColor } from 'angular-randomcolor';
 
 @Component({
   selector: 'app-chart-bills',
@@ -8,73 +11,50 @@ import { Component, OnInit } from '@angular/core';
 export class ChartSalaryComponent implements OnInit {
 
   data: any;
-  dateFrom: any;
-  dateTo: any;
-  fromfirstMonth: any;
-  fromlastMonth: any;
-  tofirstMonth: any;
-  tolastMonth: any;
+  chart: Array<any> = [];
+  dataset: Array<any> = [];
 
-  monthFrom: any;
-  monthTo: any;
-  yearFrom: any;
-  yearTo: any;
-
-  dataset: any;
-
-  constructor() { }
+  constructor(private route: ActivatedRoute,
+              private dataService: DataService) { }
 
   ngOnInit() {
 
-    this.fromfirstMonth = new Date(new Date().getFullYear(), 0, 1);
-    this.fromlastMonth = new Date();
-    this.tofirstMonth = new Date();
-    this.tolastMonth = new Date(new Date().getFullYear(), 11, 31);
-
-    this.dateFrom = this.fromfirstMonth;
-    this.dateTo = this.tolastMonth;
-
-    this.data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      datasets: this.getDataset(this.dateFrom, this.dateTo)
-    };
+    this.route.params.subscribe(params => {
+      this.dataService.getSlaveUser().subscribe(user => {
+        for (let i = 0; i <= user.length - 1; i++) {
+          this.dataService.getSalaryChart(user[i]).subscribe(chart => {
+            this.chart.push({
+              chart: chart,
+              name: user[i],
+            });
+          });
+        }
+        setTimeout(() => {
+            this.loadChart();
+          },
+          1500);
+      });
+    });
   }
 
-  onSearch($event: any) {
-    this.getDataset(this.dateFrom, this.dateTo);
-  }
+  loadChart() {
 
-  getDataset(dateFrom: any, dateTo: any) {
-
-    this.monthFrom = dateFrom.getMonth();
-    this.yearFrom = dateFrom.getFullYear();
-
-    this.monthTo = dateTo.getMonth();
-    this.yearTo = dateTo.getFullYear();
-
-
-    console.log(this.monthFrom);
-    console.log(this.yearFrom);
-
-    console.log(this.monthTo);
-    console.log(this.yearTo);
-
-
-    this.dataset =
-    [
-      {
-        label: 'Patrick',
-        data: [1800, 1900, 1750, 2000, 1980, 1600, 1750],
+    for (let i = 0; i <= this.chart.length - 1; i++) {
+      this.dataset.push({
+        label: this.chart[i].name,
+        data: this.chart[i].chart,
         fill: false,
-        borderColor: 'green'
-      },
-      {
-        label: 'Gaby',
-        data: [2000, 1900, 1800, null, 1850, 1700, 1800],
-        fill: false,
-        borderColor: '#565656'
+        borderColor: RandomColor.generateColor()
+      });
+
+      console.log(this.dataset);
+
+      if (i === this.chart.length - 1) {
+        this.data = {
+          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          datasets: this.dataset
+        };
       }
-    ];
-    return this.dataset;
+    }
   }
 }

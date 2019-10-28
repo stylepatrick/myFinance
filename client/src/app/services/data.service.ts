@@ -49,4 +49,14 @@ export class DataService {
     const url = 'api/chartBills/' + this.auth.getUsername() + '/' + month + '/' + year;
     return this.http.get<ChartBills[]>(url, {headers: this.headers});
   }
+
+  getSalaryChart(user: any): Observable<any[]> {
+    const url = 'api/chartSalary/' + user;
+    return this.http.get<any[]>(url, {headers: this.headers});
+  }
+
+  getSlaveUser(): Observable<any[]> {
+    const url = 'api/slaveUser/' + this.auth.getUsername();
+    return this.http.get<any[]>(url, {headers: this.headers});
+  }
 }
