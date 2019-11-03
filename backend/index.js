@@ -5,11 +5,87 @@ var dbconnection = require ('./dbconnection.js');
 
 var auth = require('basic-auth');
 var _ = require('lodash');
+var nodemailer = require('nodemailer');
 
 var username = 'patrick'; //process.env.ENV_API_USER;
 var password = 'patrick'; //process.env.ENV_API_PASS;
 
+var schedule = require('node-schedule');
+
 app.listen(3000);
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'myfinance.smarthome@gmail.com',//process.env.ENV_MAIL_ADRE;
+    pass: '8L4rcZWJ'                      //process.env.ENV_MAIL_PASS;
+  }
+});
+
+//ToDo find better way to get the data from DB. It is static for user Gaby and Patrick. If more user are using the Application a dynamic way is needed.
+var j = schedule.scheduleJob('*    *    *    1    8    *', function(){
+
+  try{
+    var pool = dbconnection();
+  }catch(err){
+    console.log('Connect to database failed!')
+    callback(null);
+  }
+
+  pool.connect().then(client => {
+    client.query(
+      "select * from v_mfi_bills_last_month_patrick_gaby;"
+    ).then(res => {
+      if(res && res.rowCount != 0){
+        var sum = res.rows[0].sum;
+        var gaby = res.rows[0].gaby;
+        var patrick = res.rows[0].patrick;
+        var gaby_delta = res.rows[0].gaby_delta;
+        var patrick_delta = res.rows[0].patrick_delta;
+
+        //ToDo build the mail String in a smarter way
+        if(patrick_delta > gaby_delta)
+        {
+          var mailOptions = {
+            from: 'myfinance.smarthome@gmail.com',                      //process.env.ENV_MAIL_ADRE;
+            to: 'ahrntal.patrick@gmail.com, gaby_lindner@hotmail.com',  //process.env.ENV_MAIL_TO;
+            subject: 'Sending Email using Node.js',
+            html: '<h1>MyFinance Bot</h1><p>You totaly spent<b> ' + sum + '€</b> for the last month.</p>' +
+            '<p>Gaby:<b> ' + gaby + '€</b></p>' +
+            '<p>Patrick:<b> ' + patrick + '€</b></p>' +
+            '<p>Patrick needs to give Gaby <b>' + patrick_delta + '€</b></p>'
+          };
+        } if(patrick_delta < gaby_delta){
+          var mailOptions = {
+            from: 'myfinance.smarthome@gmail.com',                      //process.env.ENV_MAIL_ADRE;
+            to: 'ahrntal.patrick@gmail.com',                            //process.env.ENV_MAIL_TO;
+            subject: 'Sending Email using Node.js',
+            html: '<h1>MyFinance Bot</h1><p>You totaly spent<b> ' + sum + '€</b> for the last month.</p>' +
+            '<p>Gaby: <b>' + gaby + '€</b></p>' +
+            '<p>Patrick: <b>' + patrick + '€</b></p>' +
+            '<p>Gaby needs to give Patrick <b>' + gaby_delta + '€</b></p>'
+          };
+        }
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+
+      } else {
+        result.send('Error with Query');
+        
+      }			
+    })
+    .catch(e => {
+      console.error('query error', e.message, e.stack)
+      pool.end();
+      return null;
+    })
+    })
+});
 
 
 app.get('/', function (req, res) {
