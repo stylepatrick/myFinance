@@ -1,4 +1,4 @@
-var express = require('express')
+﻿var express = require('express')
 var app = express();
 
 var dbconnection = require ('./dbconnection.js');
@@ -23,7 +23,7 @@ var transporter = nodemailer.createTransport({
 });
 
 //ToDo find better way to get the data from DB. It is static for user Gaby and Patrick. If more user are using the Application a dynamic way is needed.
-var j = schedule.scheduleJob('*    *    8    1    *    *', function(){
+var j = schedule.scheduleJob('0    0    8    1    *    *', function(){
 
   try{
     var pool = dbconnection();
