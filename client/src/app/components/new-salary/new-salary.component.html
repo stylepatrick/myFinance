@@ -1,0 +1,18 @@
+<p-toast [style]="{marginTop: '0px'}"></p-toast>
+<div align="center" style="font-family: Arial; color: white;">
+  <p align="center">Salary`s are visible in the Chart-Dashboard</p>
+  <table>
+    <tr>
+      <div class="ui-inputgroup">
+        <span class="ui-inputgroup-addon"><i class="pi pi-money-bill"></i></span>
+        <input type="text" pInputText pKeyFilter="money" [(ngModel)]="amount" placeholder="amount">
+      </div>
+      <div style="margin: 10px" class="ui-inputgroup">
+        <p-checkbox value="true" label="salary for last month" [(ngModel)]="lastMonth" inputId="ny"></p-checkbox>
+      </div>
+    </tr>
+    <tr>
+      <td align="right"><p-button [disabled]="!amount" icon="pi pi-save" (onClick)="onSaveButton($event)" label="Save"></p-button></td>
+    </tr>
+  </table>
+</div>

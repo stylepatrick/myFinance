@@ -1,0 +1,24 @@
+<div style="font: font-family: Arial; margin-top: -20px; font-size: 20px" class="p-grid">
+  <div align="center" class="p-col-12">
+    <span style="font-size: 15px;"><i class="pi pi-calendar"></i>From </span>
+    <p-calendar (onSelect)="onSearch()" view="month" [minDate]="fromfirstMonth" [maxDate]="fromlastMonth" dateFormat="mm/yy" [(ngModel)]="dateFrom" [touchUI]="true"></p-calendar>
+  </div>
+</div>
+<hr />
+<p-table [columns]="cols" [value]="chart">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr align="center">
+      <td *ngFor="let col of columns">
+        {{rowData[col.field]}}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+

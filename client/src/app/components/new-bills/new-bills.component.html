@@ -1,0 +1,28 @@
+<p-toast [style]="{marginTop: '0px'}"></p-toast>
+<div align="center" style="font-family: Arial; color: white;">
+  <p align="center">New bills are visible in your Actual-Dashboard</p>
+  <table>
+    <tr>
+      <div class="ui-inputgroup">
+        <span class="ui-inputgroup-addon"><i class="pi pi-money-bill"></i></span>
+        <input type="text" pInputText pKeyFilter="money" [(ngModel)]="amount" placeholder="amount">
+      </div>
+    </tr>
+    <tr>
+      <div class="ui-inputgroup">
+        <span class="ui-inputgroup-addon"><i class="pi pi-pencil"></i></span>
+        <input type="text" pInputText maxlength="255" [(ngModel)]="note" placeholder="note">
+      </div>
+    </tr>
+    <!--<tr>
+      <div class="ui-inputgroup">
+        <p>
+        <p-calendar [(ngModel)]="date" [showIcon]="true" [touchUI]="true"></p-calendar>
+        </p>
+      </div>
+    </tr>-->
+    <tr>
+      <td align="right"><p-button [disabled]="!amount" icon="pi pi-save" (onClick)="onSaveButton($event)" label="Save"></p-button></td>
+    </tr>
+  </table>
+</div>
