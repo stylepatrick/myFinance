@@ -10,14 +10,14 @@ services:
          - 5432:5432
        environment:
          POSTGRES_USER: myfinance
-         POSTGRES_PASSWORD: xxxxxx
+         POSTGRES_PASSWORD: password
        logging:
          driver: "json-file"
          options:
            max-size: "10m"
            max-file: "10"
 
-    #admin: password: xxxxxx
+    #admin: password: password
     rpi-keycloak:
         restart: always
         privileged: true
@@ -41,7 +41,7 @@ services:
          - '8181:8181'
       # environment:
       #   POSTGRES_USER: myfinance
-      #   POSTGRES_PASSWORD: money1234#
+      #   POSTGRES_PASSWORD: password
        logging:
          driver: "json-file"
          options:
