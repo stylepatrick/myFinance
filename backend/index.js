@@ -143,8 +143,19 @@ app.get('/api/historyBills/:user/:month/:year', function (req, result, callback)
 
   var user = req.params.user;
   var month = req.params.month;
-  var monthTo = parseInt(month) + 1;
-  var year = req.params.year;
+  var monthTo;
+  var year;
+  var yearNew;
+
+  if (month == 12) {
+    monthTo = parseInt(month) - 11;
+    yearNew = parseInt(req.params.year) + 1; 
+  }
+  else {
+    monthTo = parseInt(month) + 1;
+    year = req.params.year;
+    yearNew = year;
+  }
 
   
   try{
@@ -156,10 +167,11 @@ app.get('/api/historyBills/:user/:month/:year', function (req, result, callback)
 
   pool.connect().then(client => {
     client.query(
-      "select value, to_char(crdt, 'DD.MM.YYY  HH12:MI:SS') as crdt, note from MFI_BILLS where crby = '" + user + "' and crdt between to_date('" + month + "." + year + "', 'MM.YYYY') and to_date('" + monthTo + "." + year + "', 'MM.YYYY');"
+      "select value, to_char(crdt, 'DD.MM.YYY  HH12:MI:SS') as crdt, note from MFI_BILLS where crby = '" + user + "' and crdt between to_date('" + month + "." + year + "', 'MM.YYYY') and to_date('" + monthTo + "." + yearNew + "', 'MM.YYYY');"
     ).then(res => {
       if(res && res.rowCount != 0){
         result.send(res.rows);
+        console.log(client.query);
       } else {
         var noUser = {
           "userNotFound" : true,
@@ -347,6 +359,9 @@ app.get('/api/chartBills/:user/:month/:year', function (req, result, callback) {
   var user = req.params.user;
   var month = req.params.month;
   var year = req.params.year;
+
+  if(month.toString().length < 2)
+   month= "0"+month;
   
   try{
     var pool = dbconnection();
