@@ -269,7 +269,7 @@ app.get('/api/new/salary/:user/:value', function(req, result, callback){
   {
     pool.connect().then(client => {
       client.query(
-        "select * from MFI_SALARY where crby = '" +  req.params.user + "' and extract (month FROM crdt) = extract (month FROM CURRENT_DATE);"
+        "select * from MFI_SALARY where crby = '" +  req.params.user + "' and extract (month FROM crdt) = extract (month FROM CURRENT_DATE) and extract (year FROM crdt) = extract (year FROM CURRENT_DATE);"
       ).then(res => {
         if(res && res.rowCount == 0){
           client.query(
@@ -308,6 +308,9 @@ app.get('/api/new/salary/:user/:value', function(req, result, callback){
 
 app.get('/api/new/salary/:user/:value/lastMonth', function(req, result, callback){
 
+  var today = new Date();
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
+
   try{
     var pool = dbconnection();
   }catch(err){
@@ -318,7 +321,7 @@ app.get('/api/new/salary/:user/:value/lastMonth', function(req, result, callback
   {
     pool.connect().then(client => {
       client.query(
-        "select * from MFI_SALARY where crby = '" +  req.params.user + "' and extract (month FROM crdt) = extract (month FROM CURRENT_DATE - interval '1 month');"
+        "select * from MFI_SALARY where crby = '" +  req.params.user + "' and extract (month FROM crdt) = extract (month FROM CURRENT_DATE - interval '1 month') and extract (year FROM crdt) = extract (year FROM CURRENT_DATE);"
       ).then(res => {
         if(res && res.rowCount == 0){
           client.query(
@@ -333,12 +336,26 @@ app.get('/api/new/salary/:user/:value/lastMonth', function(req, result, callback
             console.error('query error', e.message, e.stack)
             pool.end();
           })
-
         } else {
-          var salaryExistForThisMonth = [{
-            "salaryExistForThisMonth" : true,
-           }];
-          result.send(salaryExistForThisMonth);
+          if (mm == 0) {
+            client.query(
+              "INSERT INTO MFI_SALARY (value, crby, crdt) VALUES (" + req.params.value + ", '" + req.params.user + "', date_trunc('month', current_date) - interval '1 month');"
+            ).then(res => {
+                const rowCreated = [{
+                "rowCreated" : true,
+               }];
+              result.send(rowCreated);			
+            })
+            .catch(e => {
+              console.error('query error', e.message, e.stack)
+              pool.end();
+            })
+          } else {
+            var salaryExistForThisMonth = [{
+              "salaryExistForThisMonth" : true,
+             }];
+            result.send(salaryExistForThisMonth);
+          }
         }			
       })
       .catch(e => {
