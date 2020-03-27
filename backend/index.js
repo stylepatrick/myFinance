@@ -17,8 +17,8 @@ app.listen(3000);
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'mail',                         //process.env.ENV_MAIL_ADRE;
-    pass: 'password'                      //process.env.ENV_MAIL_PASS;
+    user: 'myfinance.smarthome@gmail.com',//process.env.ENV_MAIL_ADRE;
+    pass: '8L4rcZWJ'                      //process.env.ENV_MAIL_PASS;
   }
 });
 
