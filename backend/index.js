@@ -308,6 +308,7 @@ app.get('/api/new/salary/:user/:value', function(req, result, callback){
 
 app.get('/api/new/salary/:user/:value/lastMonth', function(req, result, callback){
 
+  //ToDo find better way to handle the lastMonth endpoint with the Month Jannuary
   var today = new Date();
   var mm = String(today.getMonth() + 1).padStart(2, '0');
 
@@ -323,7 +324,7 @@ app.get('/api/new/salary/:user/:value/lastMonth', function(req, result, callback
       client.query(
         "select * from MFI_SALARY where crby = '" +  req.params.user + "' and extract (month FROM crdt) = extract (month FROM CURRENT_DATE - interval '1 month') and extract (year FROM crdt) = extract (year FROM CURRENT_DATE);"
       ).then(res => {
-        if(res && res.rowCount == 0){
+        if(res && res.rowCount === 0){
           client.query(
             "INSERT INTO MFI_SALARY (value, crby, crdt) VALUES (" + req.params.value + ", '" + req.params.user + "', date_trunc('month', current_date) - interval '1 month');"
           ).then(res => {
@@ -333,11 +334,11 @@ app.get('/api/new/salary/:user/:value/lastMonth', function(req, result, callback
             result.send(rowCreated);			
           })
           .catch(e => {
-            console.error('query error', e.message, e.stack)
+            console.error('query error', e.message, e.stack);
             pool.end();
           })
         } else {
-          if (mm === 0) {
+          if (mm == 0) {
             client.query(
               "INSERT INTO MFI_SALARY (value, crby, crdt) VALUES (" + req.params.value + ", '" + req.params.user + "', date_trunc('month', current_date) - interval '1 month');"
             ).then(res => {
