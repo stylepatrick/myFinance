@@ -39,9 +39,17 @@ services:
        ports:
          - '3000:3000'
          - '8181:8181'
-      # environment:
-      #   POSTGRES_USER: myfinance
-      #   POSTGRES_PASSWORD: password
+       environment:
+         ENV_API_USER: patrick
+         ENV_API_PASS: patrick
+         ENV_MAIL_ADRE: mail.sender@gmail.com
+         ENV_MAIL_PASS: password
+         ENV_MAIL_TO: mail.send_notification@gmail.com
+         ENV_DB_USER: dbuser
+         ENV_DB_HOST: dbhost
+         ENV_DB_DATABASE: dbdatabase
+         ENV_DB_PASSWORD: dbpassword
+         ENV_DB_PORT: dbport
        logging:
          driver: "json-file"
          options:
