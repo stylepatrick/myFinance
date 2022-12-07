@@ -17,6 +17,6 @@
     "pg": "^7.12.1",
     "pg-pool": "^2.0.7",
     "telegraf": "^3.33.3",
-    "telegram-bot-api": "^1.3.3"
+    "telegram-bot-api": "^2.0.1"
   }
 }
